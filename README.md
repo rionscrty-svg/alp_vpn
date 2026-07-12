@@ -38,6 +38,13 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
  * High Speed Mode (Cloudflare Warp)
  * Multi-Hop (Sıçrama)
  * **!! Not !! Tor ağı tarayıcınızda çalılışmaya ayarlanmıştır terminalden kullanılan araçlarla veya ek açılan uygulamalarla etkileşime girmez ( amacı dns ve killswitch ile veri sızıntısı olmaksızın internette gezinmek.)**
+## İletişim
+* instagram : https://www.instagram.com/rion.security/
+* github : 
+* youtube :
+* linkedin : 
+* tiktok :
+
 ##  Kurulum
 
 Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
@@ -47,12 +54,5 @@ git clone [https://github.com/KULLANICI_ADIN/alp_vpn.git](https://github.com/KUL
 cd alp_vpn
 sudo bash setup.sh
 
+ 
 
----------------iletişim plartformlarım------------------
-.--------------------------------------------------------.
-instagram : https://www.instagram.com/rion.security/
-github : 
-youtube :
-linkedin : 
-tiktok : 
-.-------------------------------------------------------.
