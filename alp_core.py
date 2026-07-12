@@ -7,147 +7,33 @@ import stem.control
 from stem import Signal
 from stem.control import Controller
 
-def dil_sec():
-    print("--- ALP VPN ---")
-    print("Select Language / Dil Seçin:")
-    print("[1] English")
-    print("[2] Türkçe")
-    
-    secim = input("Your choice / Seçiminiz [1-2]: ")
-    return "EN" if secim == "1" else "TR"
+print("Geliştirici: Rion")
+print("Gizlilik önemli!!!")
 
-DIL = dil_sec()
-
-MSG = {
-    "TR": {
-        "dev": "Geliştirici: Rion",
-        "privacy": "Gizlilik önemli!!!",
-        "unknown_ip": "Bilinmeyen IP",
-        "unknown_country": "Bilinmeyen Ülke",
-        "unknown_city": "Bilinmeyen Şehir",
-        "unknown_isp": "Bilinmeyen ISP",
-        "loc_fail": "[-] Konum bilgisi alınamadı.",
-        "ip_err": "[-] IP Sorgu Hatası:",
-        "tor_new": "ALP VPN: Yeni Tor kimliği (IP) talep ediliyor...",
-        "tor_lock": "[+] ALP VPN: Çıkış ülkesi [{}] olarak kilitlendi.",
-        "tor_reset": "[+] ALP VPN: Ülke kısıtlaması kaldırıldı (Rastgele IP modu).",
-        "tor_err": "[-] Ülke değiştirme hatası:",
-        "mac_start": "\n[*] {} için MAC gizleme işlemi başlatılıyor...",
-        "mac_down": "[*] Ağ bağlantısı kesiliyor...",
-        "mac_gen": "[*] Yeni sahte MAC adresi üretiliyor...",
-        "mac_restart": "[*] Ağ Yöneticisi yeniden başlatılıyor. İnternetin gelmesi 5-10 saniye sürebilir...",
-        "mac_success": "\033[92m[+] BAŞARILI: {} fiziksel kimliği başarıyla gizlendi!\033[0m\n",
-        "mac_no_tool": "[-] HATA: 'macchanger' aracı sistemde bulunamadı.",
-        "mac_fail": "[-] HATA: İşlem başarısız oldu. Ağ adını ({}) doğru yazdığınızdan emin olun.",
-        "ks_active": "\n\033[91m[!!!] ACİL DURUM: Bağlantı koptu! {} üzerinde Akıllı Zırh devreye giriyor...\033[0m",
-        "ks_success": "\033[92m[+] Akıllı Kill Switch Aktif! Gerçek IP sızıntısı engellendi, ağ fiziksel olarak açık.\033[0m\n",
-        "ks_err": "[-] Kill Switch tetikleme hatası:",
-        "ks_deact": "[*] Akıllı Kill Switch ({}) kalkanı indiriliyor...",
-        "ks_deact_suc": "\033[92m[+] Zırh kaldırıldı. Ağ trafiği normale döndü (Donanım kapatılmadı).\033[0m\n",
-        "ks_deact_err": "[-] Kill Switch kaldırma hatası:",
-        "wg_start": "\n[*] WireGuard VPN başlatılıyor ({})...",
-        "wg_success": "\033[92m[+] BAŞARILI: Tünel Aktif! Tüm trafik WireGuard'a yönlendirildi.\033[0m",
-        "wg_fail": "[-] HATA: WireGuard bağlantısı başlatılamadı!",
-        "wg_stop": "\n[*] WireGuard VPN kapatılıyor ({})...",
-        "wg_stop_suc": "\033[92m[+] BAŞARILI: Tünel Kapatıldı! Normal internete dönüldü.\033[0m",
-        "wg_stop_fail": "[-] HATA: WireGuard bağlantısı kapatılamadı!",
-        "warp_keys": "\n[*] Cloudflare WARP için kriptografik anahtarlar üretiliyor...",
-        "warp_api_err": "[-] Cloudflare API Hatası: Sunucu {} kodu döndürdü.",
-        "warp_suc": "\033[92m[+] BAŞARILI: Dinamik WARP Profili oluşturuldu! (alp_warp.conf)\033[0m",
-        "warp_err": "[-] HATA: WARP tüneli oluşturulamadı ({})",
-        "warp_not_found": "[-] HATA: Sistemde aktif bir ALP WARP bağlantısı algılanamadı.",
-        "warp_forgotten": "\n[*] WARP tüneli açık unutulmuş! Otomatik olarak kapatılıyor...",
-        "warp_clean": "[*] Ağ önbelleği ve rotalar temizleniyor (Lütfen bekleyin)...",
-        "warp_clean_suc": "\033[92m[+] Ağ kalıntıları başarıyla temizlendi. Sistem normale döndü.\033[0m",
-        "warp_clean_err": "[-] Ağ sıfırlanırken küçük bir sorun oluştu:",
-        "dns_start": "[*] DNS Sızıntı Koruması Aktifleştiriliyor...",
-        "dns_start_err": "[-] DNS başlatma hatası:",
-        "dns_stop": "[*] DNS orijinal ayarlarına döndürüldü.",
-        "multi_spy": "\033[93m[*] İstihbarat Koruması Aktif: {} ülkenin düğümleri bloklandı.\033[0m",
-        "multi_hop": "\033[92m[+] MULTI-HOP YAPILANDIRILDI: Giriş:[{}] -> Çıkış:[{}]\033[0m",
-        "multi_err": "\033[91m[-] Multi-Hop yapılandırma hatası: {}\033[0m",
-        "test_title": "--- ALP VPN ÇEKİRDEK TESTİ ---",
-        "test_curr": "Mevcut Detaylı Kimliğiniz:",
-        "test_new": "Yeni Detaylı Kimliğiniz:"
-    },
-    "EN": {
-        "dev": "Developer: Rion",
-        "privacy": "Privacy matters!!!",
-        "unknown_ip": "Unknown IP",
-        "unknown_country": "Unknown Country",
-        "unknown_city": "Unknown City",
-        "unknown_isp": "Unknown ISP",
-        "loc_fail": "[-] Failed to retrieve location info.",
-        "ip_err": "[-] IP Query Error:",
-        "tor_new": "ALP VPN: Requesting new Tor identity (IP)...",
-        "tor_lock": "[+] ALP VPN: Exit node locked to [{}].",
-        "tor_reset": "[+] ALP VPN: Country restriction lifted (Random IP mode).",
-        "tor_err": "[-] Error changing country:",
-        "mac_start": "\n[*] Starting MAC spoofing for {}...",
-        "mac_down": "[*] Disconnecting network...",
-        "mac_gen": "[*] Generating new fake MAC address...",
-        "mac_restart": "[*] Restarting Network Manager. Internet may take 5-10 seconds to connect...",
-        "mac_success": "\033[92m[+] SUCCESS: Physical identity for {} successfully hidden!\033[0m\n",
-        "mac_no_tool": "[-] ERROR: 'macchanger' tool not found on the system.",
-        "mac_fail": "[-] ERROR: Operation failed. Make sure the interface name ({}) is correct.",
-        "ks_active": "\n\033[91m[!!!] EMERGENCY: Connection lost! Deploying Smart Armor on {}...\033[0m",
-        "ks_success": "\033[92m[+] Smart Kill Switch Active! Real IP leak prevented, network physically open.\033[0m\n",
-        "ks_err": "[-] Kill switch deployment error:",
-        "ks_deact": "[*] Removing Smart Kill Switch ({}) armor...",
-        "ks_deact_suc": "\033[92m[+] Armor removed. Network traffic returned to normal (Hardware not disabled).\033[0m\n",
-        "ks_deact_err": "[-] Armor removal error:",
-        "wg_start": "\n[*] Starting WireGuard VPN ({})...",
-        "wg_success": "\033[92m[+] SUCCESS: Tunnel Active! All traffic routed through WireGuard.\033[0m",
-        "wg_fail": "[-] ERROR: Failed to start WireGuard connection!",
-        "wg_stop": "\n[*] Stopping WireGuard VPN ({})...",
-        "wg_stop_suc": "\033[92m[+] SUCCESS: Tunnel Closed! Returned to normal internet.\033[0m",
-        "wg_stop_fail": "[-] ERROR: Failed to close WireGuard connection!",
-        "warp_keys": "\n[*] Generating cryptographic keys for Cloudflare WARP...",
-        "warp_api_err": "[-] Cloudflare API Error: Server returned code {}.",
-        "warp_suc": "\033[92m[+] SUCCESS: Dynamic WARP Profile created! (alp_warp.conf)\033[0m",
-        "warp_err": "[-] ERROR: Failed to create WARP tunnel ({})",
-        "warp_not_found": "[-] ERROR: No active ALP WARP connection detected on system.",
-        "warp_forgotten": "\n[*] WARP tunnel left open! Closing automatically...",
-        "warp_clean": "[*] Cleaning network cache and routes (Please wait)...",
-        "warp_clean_suc": "\033[92m[+] Network remains successfully cleaned. System back to normal.\033[0m",
-        "warp_clean_err": "[-] Minor issue while resetting network:",
-        "dns_start": "[*] Activating DNS Leak Protection...",
-        "dns_start_err": "[-] DNS activation error:",
-        "dns_stop": "[*] DNS restored to original settings.",
-        "multi_spy": "\033[93m[*] Intelligence Protection Active: Nodes from {} countries blocked.\033[0m",
-        "multi_hop": "\033[92m[+] MULTI-HOP CONFIGURED: Entry:[{}] -> Exit:[{}]\033[0m",
-        "multi_err": "\033[91m[-] Multi-Hop configuration error: {}\033[0m",
-        "test_title": "--- ALP VPN CORE TEST ---",
-        "test_curr": "Current Detailed Identity:",
-        "test_new": "New Detailed Identity:"
-    }
-}
-# =========================================================
-
-print(MSG[DIL]["dev"])
-print(MSG[DIL]["privacy"])
-
+# ESKİ FONKSİYON: Sadece ham IP adresini döner (WARP gibi tüm sistemi kaplayan ağlar için)
 def get_current_ip():
     time.sleep(2)
-    proxies = {'http': None, 'https': None} 
+    proxies = {'http': None, 'https': None} # Tor'u atla, sistemin ana ağından çık (WARP testleri için)
     try:
         response = requests.get('http://ip-api.com/json/', proxies=proxies, timeout=10)
         data = response.json() 
         
         if data.get('status') == 'success':
-            ip = data.get('query', MSG[DIL]["unknown_ip"])
-            ulke = data.get('country', MSG[DIL]["unknown_country"])
-            sehir = data.get('city', MSG[DIL]["unknown_city"])
-            isp = data.get('isp', MSG[DIL]["unknown_isp"])
+            ip = data.get('query', 'Bilinmeyen IP')
+            ulke = data.get('country', 'Bilinmeyen Ülke')
+            sehir = data.get('city', 'Bilinmeyen Şehir')
+            isp = data.get('isp', 'Bilinmeyen ISP')
             
             return f"\033[96m{ip}\033[0m ({ulke}, {sehir}) - ISP: {isp}"
         else:
-            return MSG[DIL]["loc_fail"]
+            return "[-] Konum bilgisi alınamadı."
     except Exception as e:
-        return f"{MSG[DIL]['ip_err']} {e}"
+        return f"[-] IP Sorgu Hatası: {e}"
 
+# YENİ FONKSİYON: IP'yi analiz edip konum bilgisi döner (SADECE TOR AĞI İÇİN)
 def get_detailed_ip_info():
     time.sleep(2)
+    # Sadece bu fonksiyon Tor portundan çıkar! (Ghost mode ve Custom Mode için)
     proxies = {
         'http': 'socks5h://127.0.0.1:9050',
         'https': 'socks5h://127.0.0.1:9050'
@@ -157,28 +43,34 @@ def get_detailed_ip_info():
         data = response.json() 
         
         if data.get('status') == 'success':
-            ip = data.get('query', MSG[DIL]["unknown_ip"])
-            ulke = data.get('country', MSG[DIL]["unknown_country"])
-            sehir = data.get('city', MSG[DIL]["unknown_city"])
-            isp = data.get('isp', MSG[DIL]["unknown_isp"])
+            ip = data.get('query', 'Bilinmeyen IP')
+            ulke = data.get('country', 'Bilinmeyen Ülke')
+            sehir = data.get('city', 'Bilinmeyen Şehir')
+            isp = data.get('isp', 'Bilinmeyen ISP')
             
             return f"\033[96m{ip}\033[0m ({ulke}, {sehir}) - ISP: {isp}"
         else:
-            return MSG[DIL]["loc_fail"]
+            return "[-] Konum bilgisi alınamadı."
     except Exception as e:
-        return f"{MSG[DIL]['ip_err']} {e}"
+        return f"[-] IP Sorgu Hatası: {e}"
 
+# IP DEĞİŞTİRME MOTORU
 def renew_tor_ip():
+    """Tor ağına yeni bir kimlik (IP) sinyali gönderir."""
     try:
         with stem.control.Controller.from_port(port=9051) as controller:
             controller.authenticate() 
             controller.signal(stem.Signal.NEWNYM)
-            print(MSG[DIL]["tor_new"])
+            print("ALP VPN: Yeni Tor kimliği (IP) talep ediliyor...")
             return True
     except (stem.SocketError, Exception):
         return False
 
 def set_tor_exit_node(country_code=None):
+    """
+    Tor çıkış düğümünü belirli bir ülkeye sabitler.
+    Eğer None girilirse kısıtlamayı kaldırır (rastgele ülkeye döner).
+    """
     try:
         with stem.control.Controller.from_port(port=9051) as controller:
             controller.authenticate()
@@ -187,66 +79,75 @@ def set_tor_exit_node(country_code=None):
                 formatted_code = f"{{{country_code.lower()}}}"
                 controller.set_conf("ExitNodes", formatted_code)
                 controller.set_conf("StrictNodes", "1")
-                print(MSG[DIL]["tor_lock"].format(country_code.upper()))
+                print(f"[+] ALP VPN: Çıkış ülkesi [{country_code.upper()}] olarak kilitlendi.")
             else:
                 controller.reset_conf("ExitNodes")
                 controller.reset_conf("StrictNodes")
-                print(MSG[DIL]["tor_reset"])
+                print("[+] ALP VPN: Ülke kısıtlaması kaldırıldı (Rastgele IP modu).")
                 
             controller.signal(Signal.NEWNYM)
-            time.sleep(5) 
+            time.sleep(5) # ZAMANLAMA 5 SANİYEYE ÇIKARILDI (Tor'un kilitleri tam kavraması için)
     except Exception as e:
-        print(f"{MSG[DIL]['tor_err']} {e}")
+        print(f"[-] Ülke değiştirme hatası: {e}")
         
 def change_mac_address(interface):
-    print(MSG[DIL]["mac_start"].format(interface))
+    """Ağ yöneticisine reset atarak çalışan kesin MAC gizleme fonksiyonu."""
+    print(f"\n[*] {interface} için MAC gizleme işlemi başlatılıyor...")
+    
     try:
-        print(MSG[DIL]["mac_down"])
+        print("[*] Ağ bağlantısı kesiliyor...")
         subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "down"], check=True)
         
-        print(MSG[DIL]["mac_gen"])
+        print("[*] Yeni sahte MAC adresi üretiliyor...")
         subprocess.run(["sudo", "macchanger", "-r", interface], check=True, stdout=subprocess.DEVNULL)
         
         subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "up"], check=True)
         
         if shutil.which("systemctl"):
-            print(MSG[DIL]["mac_restart"])
+            print("[*] Ağ Yöneticisi yeniden başlatılıyor. İnternetin gelmesi 5-10 saniye sürebilir...")
             subprocess.run(["sudo", "systemctl", "restart", "NetworkManager"], check=True)
             time.sleep(6) 
             
-        print(MSG[DIL]["mac_success"].format(interface))
+        print(f"\033[92m[+] BAŞARILI: {interface} fiziksel kimliği başarıyla gizlendi!\033[0m\n")
         
     except FileNotFoundError:
-        print(MSG[DIL]["mac_no_tool"])
+        print("[-] HATA: 'macchanger' aracı sistemde bulunamadı.")
     except subprocess.CalledProcessError:
-        print(MSG[DIL]["mac_fail"].format(interface))
+        print(f"[-] HATA: İşlem başarısız oldu. Ağ adını ({interface}) doğru yazdığınızdan emin olun.")
         subprocess.run(["sudo", "ip", "link", "set", "dev", interface, "up"], stderr=subprocess.DEVNULL)
         if shutil.which("systemctl"):
             subprocess.run(["sudo", "systemctl", "restart", "NetworkManager"], stderr=subprocess.DEVNULL)
 
+# akıllı killswitch zırhı
 def activate_kill_switch(interface):
-    print(MSG[DIL]["ks_active"].format(interface))
+    """Ağı fiziksel olarak kapatmak yerine IPTables ile anında kilitler (Akıllı Zırh)."""
+    print(f"\n\033[91m[!!!] ACİL DURUM: Bağlantı koptu! {interface} üzerinde Akıllı Zırh devreye giriyor...\033[0m")
     try:
+        # Eski kuralları temizle ve her şeyi yasakla
         subprocess.run(["sudo", "iptables", "-F"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-P", "OUTPUT", "DROP"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-P", "INPUT", "DROP"], capture_output=True)
         
+        # 1. Localhost serbest
         subprocess.run(["sudo", "iptables", "-A", "OUTPUT", "-o", "lo", "-j", "ACCEPT"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-A", "INPUT", "-i", "lo", "-j", "ACCEPT"], capture_output=True)
         
+        # 2. DHCP İzni: Modemden IP alınabilmesi için UDP 67/68 serbest
         subprocess.run(["sudo", "iptables", "-A", "OUTPUT", "-p", "udp", "--dport", "67", "--sport", "68", "-j", "ACCEPT"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-A", "INPUT", "-p", "udp", "--dport", "68", "--sport", "67", "-j", "ACCEPT"], capture_output=True)
         
+        # 3. Tor İzni (Hem Debian/Kali hem de Fedora için ikisini de ekliyoruz)
         subprocess.run(["sudo", "iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "toranon", "-j", "ACCEPT"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "debian-tor", "-j", "ACCEPT"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-A", "INPUT", "-m", "state", "--state", "ESTABLISHED,RELATED", "-j", "ACCEPT"], capture_output=True)
 
-        print(MSG[DIL]["ks_success"])
+        print(f"\033[92m[+] Akıllı Kill Switch Aktif! Gerçek IP sızıntısı engellendi, ağ fiziksel olarak açık.\033[0m\n")
     except Exception as e:
-        print(f"{MSG[DIL]['ks_err']} {e}")
+        print(f"[-] Kill Switch tetikleme hatası: {e}")
 
 def deactivate_kill_switch(interface): 
-    print(MSG[DIL]["ks_deact"].format(interface))
+    """Akıllı zırhı (IPTables kilitlerini) kaldırır ve ağı serbest bırakır."""
+    print(f"[*] Akıllı Kill Switch ({interface}) kalkanı indiriliyor...")
     try:
         subprocess.run(["sudo", "iptables", "-F"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-X"], capture_output=True)
@@ -254,34 +155,37 @@ def deactivate_kill_switch(interface):
         subprocess.run(["sudo", "iptables", "-P", "OUTPUT", "ACCEPT"], capture_output=True)
         subprocess.run(["sudo", "iptables", "-P", "FORWARD", "ACCEPT"], capture_output=True)
         
-        print(MSG[DIL]["ks_deact_suc"])
+        print(f"\033[92m[+] Zırh kaldırıldı. Ağ trafiği normale döndü (Donanım kapatılmadı).\033[0m\n")
     except Exception as e:
-        print(f"{MSG[DIL]['ks_deact_err']} {e}")
+        print(f"[-] Kill Switch kaldırma hatası: {e}")
 
+# hızlı internet wireguard için (kapatma)
 def connect_wireguard(config_path):
-    print(MSG[DIL]["wg_start"].format(config_path))
+    print(f"\n[*] WireGuard VPN başlatılıyor ({config_path})...")
     try:
         subprocess.run(["sudo", "wg-quick", "up", config_path], check=True)
-        print(MSG[DIL]["wg_success"])
+        print("\033[92m[+] BAŞARILI: Tünel Aktif! Tüm trafik WireGuard'a yönlendirildi.\033[0m")
         secure_dns_start() 
         return True
     except subprocess.CalledProcessError:
-        print(MSG[DIL]["wg_fail"])
+        print("[-] HATA: WireGuard bağlantısı başlatılamadı!")
         return False
 
 def disconnect_wireguard(config_path):
-    print(MSG[DIL]["wg_stop"].format(config_path))
+    print(f"\n[*] WireGuard VPN kapatılıyor ({config_path})...")
     try:
         subprocess.run(["sudo", "wg-quick", "down", config_path], check=True)
-        print(MSG[DIL]["wg_stop_suc"])
+        print("\033[92m[+] BAŞARILI: Tünel Kapatıldı! Normal internete dönüldü.\033[0m")
         secure_dns_stop()
         return True
     except subprocess.CalledProcessError:
-        print(MSG[DIL]["wg_stop_fail"])
+        print("[-] HATA: WireGuard bağlantısı kapatılamadı!")
         return False
 
+# beyin takımı Cloudflare
 def connect_warp():
-    print(MSG[DIL]["warp_keys"])
+    """Cloudflare API'sinden dinamik WireGuard profili üretir ve bağlanır."""
+    print("\n[*] Cloudflare WARP için kriptografik anahtarlar üretiliyor...")
     try:
         privkey = subprocess.check_output(["wg", "genkey"]).decode("utf-8").strip()
         p = subprocess.Popen(["wg", "pubkey"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
@@ -301,7 +205,7 @@ def connect_warp():
         
         response = requests.post(url, json=payload, headers=headers, timeout=10)
         if response.status_code != 200:
-            print(MSG[DIL]["warp_api_err"].format(response.status_code))
+            print(f"[-] Cloudflare API Hatası: Sunucu {response.status_code} kodu döndürdü.")
             return False
             
         data = response.json()
@@ -328,14 +232,15 @@ AllowedIPs = 0.0.0.0/0
         with open(config_path, "w") as f:
             f.write(warp_config)
             
-        print(MSG[DIL]["warp_suc"])
+        print("\033[92m[+] BAŞARILI: Dinamik WARP Profili oluşturuldu! (alp_warp.conf)\033[0m")
         return connect_wireguard(config_path)
 
     except Exception as e:
-        print(MSG[DIL]["warp_err"].format(e))
+        print(f"[-] HATA: WARP tüneli oluşturulamadı ({e})")
         return False
 
 def disconnect_warp():
+    """Aktif WARP bağlantısını kapatır ve geçici profili siler."""
     config_path = os.path.abspath("alp_warp.conf")
     if os.path.exists(config_path):
         success = disconnect_wireguard(config_path)
@@ -345,7 +250,7 @@ def disconnect_warp():
             pass
         return success
     else:
-        print(MSG[DIL]["warp_not_found"])
+        print("[-] HATA: Sistemde aktif bir ALP WARP bağlantısı algılanamadı.")
         return False
 
 def is_warp_running():
@@ -353,17 +258,18 @@ def is_warp_running():
     return "alp_warp" in result.stdout
 
 def stop_warp():
+    """Kullanıcı aniden çıkış yaptığında (Ctrl+C veya Exit) tüneli güvenle kapatır ve ağı temizler."""
     if is_warp_running():
-        print(MSG[DIL]["warp_forgotten"])
+        print("\n[*] WARP tüneli açık unutulmuş! Otomatik olarak kapatılıyor...")
         disconnect_warp() 
         
-        print(MSG[DIL]["warp_clean"])
+        print("[*] Ağ önbelleği ve rotalar temizleniyor (Lütfen bekleyin)...")
         try:
             subprocess.run(['sudo', 'systemctl', 'restart', 'NetworkManager'], capture_output=True)
             time.sleep(2) 
-            print(MSG[DIL]["warp_clean_suc"])
+            print("\033[92m[+] Ağ kalıntıları başarıyla temizlendi. Sistem normale döndü.\033[0m")
         except Exception as e:
-            print(f"{MSG[DIL]['warp_clean_err']} {e}")
+            print(f"[-] Ağ sıfırlanırken küçük bir sorun oluştu: {e}")
             
     else:
         config_path = os.path.abspath("alp_warp.conf")
@@ -375,7 +281,7 @@ def stop_warp():
 
 def secure_dns_start():
     try:
-        print(MSG[DIL]["dns_start"])
+        print("[*] DNS Sızıntı Koruması Aktifleştiriliyor...")
         subprocess.run(["sudo", "chattr", "-i", "/etc/resolv.conf"], capture_output=True)
         subprocess.run(["sudo", "cp", "-a", "/etc/resolv.conf", "/etc/resolv.conf.alp_backup"], capture_output=True)
         subprocess.run(["sudo", "rm", "-f", "/etc/resolv.conf"], capture_output=True)
@@ -389,7 +295,7 @@ def secure_dns_start():
         
         return res.returncode == 0
     except Exception as e:
-        print(f"{MSG[DIL]['dns_start_err']} {e}")
+        print(f"[-] DNS başlatma hatası: {e}")
         return False
 
 def secure_dns_stop():
@@ -402,12 +308,15 @@ def secure_dns_stop():
         else:
             subprocess.run(["sudo", "ln", "-sf", "/run/systemd/resolve/stub-resolv.conf", "/etc/resolv.conf"], capture_output=True)
             
-        print(MSG[DIL]["dns_stop"])
+        print("[*] DNS orijinal ayarlarına döndürüldü.")
         return True
     except Exception as e:
         return False
 
 def configure_multihop_circuit(entry_country=None, exit_country=None, strict=True, spy_protection_level=0):
+    """
+    Tor düğümlerini yapılandırır ve opsiyonel olarak istihbarat ittifaklarını engeller.
+    """
     try:
         with Controller.from_port(port=9051) as controller:
             controller.authenticate()
@@ -435,7 +344,7 @@ def configure_multihop_circuit(entry_country=None, exit_country=None, strict=Tru
                     
                 exclude_str = ",".join([f"{{{c.lower()}}}" for c in blacklist])
                 controller.set_conf("ExcludeNodes", exclude_str)
-                print(MSG[DIL]["multi_spy"].format(len(blacklist)))
+                print(f"\033[93m[*] İstihbarat Koruması Aktif: {len(blacklist)} ülkenin düğümleri bloklandı.\033[0m")
             else:
                 controller.reset_conf("ExcludeNodes")
                 
@@ -445,15 +354,15 @@ def configure_multihop_circuit(entry_country=None, exit_country=None, strict=Tru
                 controller.set_conf("StrictNodes", "0")
                 
             controller.signal(stem.Signal.NEWNYM)
-            print(MSG[DIL]["multi_hop"].format(entry_country, exit_country))
+            print(f"\033[92m[+] MULTI-HOP YAPILANDIRILDI: Giriş:[{entry_country}] -> Çıkış:[{exit_country}]\033[0m")
             return True
             
     except Exception as e:
-        print(MSG[DIL]["multi_err"].format(e))
+        print(f"\033[91m[-] Multi-Hop yapılandırma hatası: {e}\033[0m")
         return False
 
 if __name__ == "__main__":
-    print(MSG[DIL]["test_title"])
-    print(f"{MSG[DIL]['test_curr']} {get_detailed_ip_info()}")
+    print("--- ALP VPN ÇEKİRDEK TESTİ ---")
+    print(f"Mevcut Detaylı Kimliğiniz: {get_detailed_ip_info()}")
     renew_tor_ip()
-    print(f"{MSG[DIL]['test_new']} {get_detailed_ip_info()}")
+    print(f"Yeni Detaylı Kimliğiniz: {get_detailed_ip_info()}")
