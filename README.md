@@ -50,7 +50,7 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
 Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
 
 ```bash
-git clone [https://github.com/KULLANICI_ADIN/alp_vpn.git](https://github.com/KULLANICI_ADIN/alp_vpn.git)
+git clone https://github.com/rionscrty-svg/alp_vpn.git
 cd alp_vpn
 sudo bash setup.sh
 
