@@ -13,6 +13,16 @@ Alp VPN, Linux sistemler için geliştirilmiş, üst düzey gizlilik sağlayan g
 
 **Geliştirici:** Rion
 
+##  Kurulum
+
+Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
+
+```bash
+git clone https://github.com/rionscrty-svg/alp_vpn.git
+cd alp_vpn
+sudo bash setup.sh
+sudo python3 alp_vpn.py
+```
 ## Neden ALP VPN? (Yeni: Akıllı Zırh Teknolojisi)
 
 Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen kapatarak donanımı yorar ve sistemi dondururdu. ALP VPN, baştan aşağı yenilenen **Akıllı Zırh (IPTables Kill Switch)** mimarisiyle çalışır:
@@ -28,6 +38,7 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
 - **Cloudflare WARP Entegrasyonu:** Dinamik WireGuard tünellemesi ile hızlı anonimlik.
 - **Kesin MAC Gizleme:** İnternet çıkışından önce ağ yöneticisini resetleyerek fiziksel kimliği (MAC) maskeler.
 
+
 ## İçindeki seçenekler 
 
  * Ghost Mode (Rastgele Ülke - 30s de bir IP değişir)
@@ -37,7 +48,8 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
  * Custom Wireguard Node (Özel Sunucu / kendi wireguardın)  >> eğer işletim sisteminizi kapsayan bir güvenlik istiyorsanız bunu seçmelisiniz <<  
  * High Speed Mode (Cloudflare Warp)
  * Multi-Hop (Sıçrama)
- * **!! Not !! Tor ağı tarayıcınızda çalılışmaya ayarlanmıştır terminalden kullanılan araçlarla veya ek açılan uygulamalarla etkileşime girmez ( amacı dns ve killswitch ile veri sızıntısı olmaksızın internette gezinmek.)**
+ * **!! Not !! Tor ağı tarayıcınızda çalılışmaya ayarlanmıştır terminalden kullanılan araçlarla veya ek açılan uygulamalarla etkileşime girmez ( amacı dns ve killswitch ile veri sızıntısı olmaksızın internette gezinmek.).Tor ağını kullanırken FoxyProxy kullanılması tavsiye edilir**
+
 ## İletişim
 * instagram : https://www.instagram.com/rion.security/
 * github : 
@@ -45,15 +57,6 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
 * linkedin : 
 * tiktok :
 
-##  Kurulum
-
-Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
-
-```bash
-git clone https://github.com/rionscrty-svg/alp_vpn.git
-cd alp_vpn
-sudo bash setup.sh
-sudo python3 alp_vpn.py
 
  
 
