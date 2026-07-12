@@ -45,7 +45,7 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
  * Custom Tor Profile (Süreyi Sen Seç)
  * Location Changer (Hedef Ülke Seçimi)
  * Mac Adresi Gizleme (Ağ yöneticisinden gizlenme / MAC Spoofing)
- * Custom Wireguard Node (Özel Sunucu / kendi wireguardın)  >> eğer işletim sisteminizi kapsayan bir güvenlik istiyorsanız bunu seçmelisiniz <<  
+ * Custom Wireguard Node (Özel Sunucu / kendi wireguardın)   
  * High Speed Mode (Cloudflare Warp)
  * Multi-Hop (Sıçrama)
  * **!! Not !! Tor ağı tarayıcınızda çalılışmaya ayarlanmıştır terminalden kullanılan araçlarla veya ek açılan uygulamalarla etkileşime girmez ( amacı dns ve killswitch ile veri sızıntısı olmaksızın internette gezinmek.).Tor ağını kullanırken FoxyProxy kullanılması tavsiye edilir**
