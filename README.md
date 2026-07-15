@@ -1,63 +1,32 @@
-## Sorumluluk Reddi 
+# ALP VPN 🛡️
 
-**Bu yazılım tamamen eğitim ve siber güvenlik araştırmaları amacıyla geliştirilmiştir.**
+🌍 **[English](#english)** | 🇹🇷 **[Türkçe](#türkçe)**
 
-Alp VPN'in kullanımı sırasında doğabilecek her türlü yasal sorumluluk tamamen son kullanıcıya aittir. Geliştirici (**Rion**), bu yazılımın yasa dışı faaliyetlerde, siber saldırılarda, yetkisiz erişimlerde veya yerel yasaları ihlal eden herhangi bir eylemde kullanılmasından sorumlu tutulamaz. 
+---
 
-Yazılımı indirerek ve kullanarak tüm riskleri ve hukuki sonuçları kabul etmiş sayılırsınız.
+<a id="english"></a>
+## 🇬🇧 English
 
-> **Unutmayın:** Hiçbir sistem %100 güvenli değildir. Gizliliğinizi korurken her zaman yerel yasalara ve etik kurallara uyun.
+### Disclaimer
+**This software is developed purely for educational and cybersecurity research purposes.**
 
-# Alp VPN 
-Alp VPN, Linux sistemler için geliştirilmiş, üst düzey gizlilik sağlayan gelişmiş bir anonimlik aracıdır. Standart bir VPN'den farklı olarak Tor ağını, donanımsal Kill Switch'i, iptables tabanlı sızıntı korumasını ve MAC adresi manipülasyonunu tek bir terminal arayüzünde birleştirir.
+All legal responsibilities that may arise during the use of Alp VPN belong entirely to the end user. The developer (**Rion**) cannot be held responsible for the use of this software in illegal activities, cyber attacks, unauthorized access, or any action that violates local laws.
 
-**Geliştirici:** Rion
+By downloading and using the software, you accept all risks and legal consequences.
 
-##  Kurulum
+> **Remember:** No system is 100% secure. Always comply with local laws and ethical rules while protecting your privacy.
 
-Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
+### About Alp VPN
+Alp VPN is an advanced anonymity tool developed for Linux systems that provides high-level privacy. Unlike a standard VPN, it combines the Tor network, a software-based Kill Switch, iptables-based leak protection, and MAC address manipulation into a single terminal interface.
+
+**Developer:** Rion
+
+### Installation
+Open your terminal and run the following commands sequentially:
 
 ```bash
-git clone https://github.com/rionscrty-svg/alp_vpn.git
+git clone [https://github.com/rionscrty-svg/alp_vpn.git](https://github.com/rionscrty-svg/alp_vpn.git)
 cd alp_vpn
 sudo bash setup.sh
 sudo resolvconf -u
 sudo python3 alp_vpn.py
-```
-## Neden ALP VPN? (Yeni: Akıllı Zırh Teknolojisi)
-
-Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen kapatarak donanımı yorar ve sistemi dondururdu. ALP VPN, baştan aşağı yenilenen **Akıllı Zırh (IPTables Kill Switch)** mimarisiyle çalışır:
-
-* **Milisaniyelik Tepki:** Tor ağı veya VPN bağlantısı koptuğu anda, ağ donanımınız kapatılmadan sadece `iptables` üzerinden tüm trafik kilitlenir. Gerçek IP adresiniz bir milimetre bile dışarı sızamaz.
-* **Geniş Linux Uyumluluğu:** Debian/Kali (`debian-tor`) ve Fedora/RedHat (`toranon`) sistemlerinin tamamında kullanıcı izinlerini otomatik tanır ve sorunsuz çalışır.
-* **Sıfır Donanım Yıpranması:** Ağ yöneticisini (NetworkManager) sürekli yeniden başlatmaya gerek kalmaz, saatlerce Ghost Mode'da açık kalsa bile sisteminiz şişmez.
-* **DNS Sızıntı Koruması:** `chattr` kilitleriyle DNS adresiniz `resolv.conf` üzerinden fiziksel olarak mühürlenir.
-
-## Özellikler
-- **Ghost Mode:** Sürekli ve otomatik değişen Tor kimlikleri.
-- **Akıllı Kill-Switch:** Bağlantı koptuğunda "Connection Refused" mekanizmasıyla veriyi içeride tutar.
-- **Cloudflare WARP Entegrasyonu:** Dinamik WireGuard tünellemesi ile hızlı anonimlik.
-- **Kesin MAC Gizleme:** İnternet çıkışından önce ağ yöneticisini resetleyerek fiziksel kimliği (MAC) maskeler.
-
-
-## İçindeki seçenekler 
-
- * Ghost Mode (Rastgele Ülke - 30s de bir IP değişir)
- * Custom Tor Profile (Süreyi Sen Seç)
- * Location Changer (Hedef Ülke Seçimi)
- * Mac Adresi Gizleme (Ağ yöneticisinden gizlenme / MAC Spoofing)
- * Custom Wireguard Node (Özel Sunucu / kendi wireguardın)   
- * High Speed Mode (Cloudflare Warp)
- * Multi-Hop (Sıçrama)
- * **!! Not !! Tor ağı tarayıcınızda çalılışmaya ayarlanmıştır terminalden kullanılan araçlarla veya ek açılan uygulamalarla etkileşime girmez ( amacı dns ve killswitch ile veri sızıntısı olmaksızın internette gezinmek.).Tor ağını kullanırken FoxyProxy kullanılması tavsiye edilir**
-
-## İletişim
-* instagram : https://www.instagram.com/rion.security/
-* github : 
-* youtube :
-* linkedin : 
-* tiktok :
-
-
- 
-
