@@ -31,7 +31,8 @@ def print_banner():
 
 def clear_screen():
     subprocess.run(["clear"])
-
+def tor_degisken()
+    subprocess.run(["sudo resolvconf -u"])
 def clean_iptables_armor():
     """Çöp Toplayıcı: Modlar arası geçişte arkada kalan iptables kilitlerini temizler."""
     subprocess.run(["sudo", "iptables", "-F"], capture_output=True)
