@@ -24,12 +24,12 @@ case "$ID" in
         IS_FEDORA=true
         PACKAGES="tor python3-stem python3-requests python3-pysocks macchanger wireguard-tools iptables e2fsprogs curl"
         ;;
-   debian|ubuntu|kali|linuxmint|pop|zorin|elementary|devuan)
+    debian|ubuntu|kali|linuxmint|pop|zorin|elementary|devuan)
         echo "[*] Paket listeleri güncelleniyor..."
         apt-get update -y > /dev/null 2>&1
         PKG_MGR="apt-get install -y"
         TOR_GROUP="debian-tor"
-        # openresolv paketi listenin sonuna eklendi
+        # openresolv ve python3-socks paketi eklendi
         PACKAGES="tor python3-stem python3-requests python3-socks macchanger wireguard-tools iptables e2fsprogs curl openresolv"
         ;;
     *)
@@ -49,19 +49,45 @@ for pkg in $PACKAGES; do
     fi
 done
 
-# 5. Tor Ayarlarını Yaz
+# 5. Tor Ayarlarını Yaz (RunAsDaemon kaldırıldı, localhost güvenli bağlama eklendi)
 echo "[+] Tor yapılandırma dosyası güncelleniyor..."
 sudo bash -c 'cat <<EOF > /etc/tor/torrc
-SocksPort 9050
-ControlPort 9051
+SocksPort 127.0.0.1:9050
+ControlPort 127.0.0.1:9051
 CookieAuthentication 1
-RunAsDaemon 1
+CookieAuthFileGroupReadable 1
 EOF'
 
-# 6. Servisi Çalıştır
+# 6. Servisi Çalıştır (Port çakışmaları ve servis engelleri temizleniyor)
+echo "[+] Arka plandaki olası yetim Tor süreçleri temizleniyor..."
+killall -q -9 tor 2>/dev/null # Portları işgal eden eski yetim süreçleri öldürür
+
 echo "[+] Tor servisi başlatılıyor..."
-systemctl enable --now tor
+# Kali'de olası servis engellerini (mask) kaldır
+systemctl unmask tor 2>/dev/null
+systemctl unmask tor@default 2>/dev/null
+systemctl daemon-reload
+
+# Servisi etkinleştir ve temiz bir şekilde yeniden başlat
+systemctl enable tor >/dev/null 2>&1
 systemctl restart tor
+
+# Portların aktifleşmesi için kısa bir süre bekle ve doğrulama yap
+echo "[*] Tor servisinin hazır olması bekleniyor..."
+TOR_ACTIVE=false
+for i in {1..5}; do
+    if ss -antp 2>/dev/null | grep -E "9050|9051" >/dev/null; then
+        TOR_ACTIVE=true
+        break
+    fi
+    sleep 1
+done
+
+if [ "$TOR_ACTIVE" = true ]; then
+    echo "[+] Tor servisi başarıyla aktif edildi ve dinleniyor!"
+else
+    echo "[!] Uyarı: Tor servisi başlatıldı ancak portlar henüz yanıt vermiyor. Lütfen 'sudo systemctl status tor' komutunu kontrol edin."
+fi
 
 # 7. Güvenlik Ayarları (Sadece SELinux aktifse ve kural tanımlıysa çalıştır)
 if [ "$IS_FEDORA" = true ] && command -v selinuxenabled >/dev/null && selinuxenabled 2>/dev/null; then
