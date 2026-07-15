@@ -29,7 +29,8 @@ case "$ID" in
         apt-get update -y > /dev/null 2>&1
         PKG_MGR="apt-get install -y"
         TOR_GROUP="debian-tor"
-        PACKAGES="tor python3-stem python3-requests python3-pysocks macchanger wireguard-tools iptables e2fsprogs curl"
+        # DÜZELTME: Debian/Kali için python3-pysocks yerine python3-socks yazıldı
+        PACKAGES="tor python3-stem python3-requests python3-socks macchanger wireguard-tools iptables e2fsprogs curl"
         ;;
     *)
         echo "[-] Desteklenmeyen dağıtım: $ID"
