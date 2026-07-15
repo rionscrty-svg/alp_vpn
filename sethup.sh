@@ -24,13 +24,13 @@ case "$ID" in
         IS_FEDORA=true
         PACKAGES="tor python3-stem python3-requests python3-pysocks macchanger wireguard-tools iptables e2fsprogs curl"
         ;;
-    debian|ubuntu|kali|linuxmint|pop|zorin|elementary|devuan)
+   debian|ubuntu|kali|linuxmint|pop|zorin|elementary|devuan)
         echo "[*] Paket listeleri güncelleniyor..."
         apt-get update -y > /dev/null 2>&1
         PKG_MGR="apt-get install -y"
         TOR_GROUP="debian-tor"
-        # DÜZELTME: Debian/Kali için python3-pysocks yerine python3-socks yazıldı
-        PACKAGES="tor python3-stem python3-requests python3-socks macchanger wireguard-tools iptables e2fsprogs curl"
+        # openresolv paketi listenin sonuna eklendi
+        PACKAGES="tor python3-stem python3-requests python3-socks macchanger wireguard-tools iptables e2fsprogs curl openresolv"
         ;;
     *)
         echo "[-] Desteklenmeyen dağıtım: $ID"
