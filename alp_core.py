@@ -66,12 +66,47 @@ def renew_tor_ip():
     except (stem.SocketError, Exception):
         return False
 
+def update_torrc_country(country_code=None):
+    """
+    /etc/tor/torrc dosyasını kalıcı olarak günceller.
+    Böylece Tor yeniden başlatılsa bile ülke kilidi korunur.
+    """
+    torrc_path = "/etc/tor/torrc"
+    try:
+        # Mevcut yapılandırmayı oku
+        with open(torrc_path, "r") as f:
+            lines = f.readlines()
+        
+        # Eski ExitNodes ve StrictNodes satırlarını temizle
+        new_lines = [
+            line for line in lines 
+            if not line.strip().startswith("ExitNodes") and not line.strip().startswith("StrictNodes")
+        ]
+        
+        # Eğer ülke belirtildiyse, yeni kuralları dosyanın sonuna ekle
+        if country_code:
+            new_lines.append(f"ExitNodes {{{country_code.lower()}}}\n")
+            new_lines.append("StrictNodes 1\n")
+        
+        # Dosyaya geri yaz
+        with open(torrc_path, "w") as f:
+            f.writelines(new_lines)
+    except Exception as e:
+        print(f"[-] torrc dosyası güncellenirken hata oluştu: {e}")
+
+
 def set_tor_exit_node(country_code=None):
     """
     Tor çıkış düğümünü belirli bir ülkeye sabitler.
     Eğer None girilirse kısıtlamayı kaldırır (rastgele ülkeye döner).
     """
+    # 1. /etc/tor/torrc dosyasını kalıcı olarak güncelle (Restart durumları için koruma)
+    update_torrc_country(country_code)
+    
+    # 2. Aktif Tor kontrolörüne anlık olarak bildir
     try:
+        import stem
+        import stem.control
         with stem.control.Controller.from_port(port=9051) as controller:
             controller.authenticate()
             
@@ -85,10 +120,13 @@ def set_tor_exit_node(country_code=None):
                 controller.reset_conf("StrictNodes")
                 print("[+] ALP VPN: Ülke kısıtlaması kaldırıldı (Rastgele IP modu).")
                 
-            controller.signal(Signal.NEWNYM)
-            time.sleep(5) # ZAMANLAMA 5 SANİYEYE ÇIKARILDI (Tor'un kilitleri tam kavraması için)
-    except Exception as e:
-        print(f"[-] Ülke değiştirme hatası: {e}")
+            # Olası NameError hatasını önlemek için stem.Signal.NEWNYM kullanıyoruz
+            controller.signal(stem.Signal.NEWNYM)
+            time.sleep(5) # Tor'un kilitleri tam kavraması için bekleme süresi
+    except Exception:
+        # Tor o an yeniden başlatılıyorsa veya kapalıysa hata basmasına gerek yok, 
+        # çünkü zaten torrc güncellendi ve servis başladığında doğrudan bu ülke ile açılacaktır.
+        pass
         
 def change_mac_address(interface):
     """Ağ yöneticisine reset atarak çalışan kesin MAC gizleme fonksiyonu."""
