@@ -21,6 +21,7 @@ Terminali açın ve aşağıdaki komutları sırasıyla çalıştırın:
 git clone https://github.com/rionscrty-svg/alp_vpn.git
 cd alp_vpn
 sudo bash setup.sh
+sudo resolvconf -u
 sudo python3 alp_vpn.py
 ```
 ## Neden ALP VPN? (Yeni: Akıllı Zırh Teknolojisi)
