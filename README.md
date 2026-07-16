@@ -65,7 +65,7 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
 * github : 
 * youtube :
 * linkedin : 
-* tiktok : [https://www.tiktok.com/@rion.security)
+* tiktok : https://www.tiktok.com/@rion.security
 
 ---
 
@@ -130,4 +130,4 @@ Older generation security tools would completely shut down your network card whe
 * github : 
 * youtube :
 * linkedin : 
-* tiktok :[https://www.tiktok.com/@rion.security)
+* tiktok : https://www.tiktok.com/@rion.security
