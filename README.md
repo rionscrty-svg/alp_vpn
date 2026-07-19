@@ -34,7 +34,7 @@ sudo resolvconf -u
 sudo python3 alp_vpn.py
 ```
 
-## Neden ALP VPN? (Yeni: Akıllı Zırh Teknolojisi)
+## Neden ALP VPN? 
 
 Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen kapatarak donanımı yorar ve sistemi dondururdu. ALP VPN, baştan aşağı yenilenen **Akıllı Zırh (IPTables Kill Switch)** mimarisiyle çalışır:
 
@@ -99,7 +99,7 @@ sudo resolvconf -u
 sudo python3 alp_vpn.py
 ```
 
-## Why ALP VPN? (New: Smart Armor Technology)
+## Why ALP VPN?
 
 Older generation security tools would completely shut down your network card when the connection dropped, straining the hardware and freezing the system. ALP VPN operates with a completely revamped **Smart Armor (IPTables Kill Switch)** architecture:
 

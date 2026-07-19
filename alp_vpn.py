@@ -1,12 +1,13 @@
 import os
 import sys
 import time
+import alp_core
 import socket
 import subprocess
 import requests
 from alp_core import get_current_ip, renew_tor_ip, get_detailed_ip_info, set_tor_exit_node, change_mac_address, activate_kill_switch, deactivate_kill_switch, connect_wireguard, disconnect_wireguard, secure_dns_start, secure_dns_stop, connect_warp, disconnect_warp, configure_multihop_circuit
 
-# Global Dil Değişkenleri
+
 LANG = "tr"
 T = {}
 
@@ -14,7 +15,7 @@ TRANSLATIONS = {
     "tr": {
         "banner_subtitle": "[+] Gelişmiş Linux Ağ Gizlilik ve Güvenlik Kalkanı",
         "banner_dev": "[*] Geliştirici : Rion",
-        "banner_ver": "[*] Versiyon    : 1.1.0 (Akıllı Zırh Sürümü)",
+        "banner_ver": "[*] Versiyon    : 1.1.0",
         "check_tor": "[*] Tor bağlantısı kontrol ediliyor (Port 9050)...",
         "tor_active": "[+] Tor servisi aktif ve yanıt veriyor.\n",
         "tor_error": "[-] HATA: Tor servisi yanıt vermiyor veya kapalı!\n[-] Lütfen terminale 'sudo systemctl start tor' yazarak servisi başlatın.",
@@ -131,7 +132,7 @@ TRANSLATIONS = {
     "en": {
         "banner_subtitle": "[+] Advanced Linux Network Privacy & Security Shield",
         "banner_dev": "[*] Developer   : Rion",
-        "banner_ver": "[*] Version     : 1.1.0 (Smart Armor Edition)",
+        "banner_ver": "[*] Version     : 1.1.0 ",
         "check_tor": "[*] Checking Tor connection (Port 9050)...",
         "tor_active": "[+] Tor service is active and responding.\n",
         "tor_error": "[-] ERROR: Tor service is not responding or stopped!\n[-] Please start the service by typing 'sudo systemctl start tor' in the terminal.",
@@ -264,6 +265,7 @@ def select_language():
         LANG = "tr"
         T = TRANSLATIONS["tr"]
 
+    alp_core.set_language(LANG)
 def print_banner():
     CYAN = '\033[96m'
     GREEN = '\033[92m'
@@ -290,7 +292,6 @@ def clear_screen():
     subprocess.run(["clear"])
 
 def clean_iptables_armor():
-    """Çöp Toplayıcı: Modlar arası geçişte arkada kalan iptables kilitlerini temizler."""
     subprocess.run(["sudo", "iptables", "-F"], capture_output=True)
     subprocess.run(["sudo", "iptables", "-X"], capture_output=True)
     subprocess.run(["sudo", "iptables", "-P", "INPUT", "ACCEPT"], capture_output=True)
