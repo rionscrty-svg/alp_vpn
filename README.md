@@ -49,6 +49,12 @@ Eski nesil güvenlik araçları bağlantı koptuğunda ağ kartınızı tamamen 
 - **Cloudflare WARP Entegrasyonu:** Dinamik WireGuard tünellemesi ile hızlı anonimlik.
 - **Kesin MAC Gizleme:** İnternet çıkışından önce ağ yöneticisini resetleyerek fiziksel kimliği (MAC) maskeler.
 
+## ⚠️ Sistem Gereksinimleri:
+
+ALP VPN'in çekirdek güvenlik motoru (alp_core), tersine mühendisliği önlemek amacıyla şifrelenmiştir. Bu şifreleme işlemi Python 3.13 altyapısı kullanılarak yapılmıştır.
+
+Programı sorunsuz çalıştırmak için sisteminizde Python 3.13 yüklü olmalıdır. Daha düşük sürümlerde (örn. Python 3.10 veya 3.11) undefined symbol hatası alabilirsiniz
+
 ## İçindeki seçenekler 
 
  * Ghost Mode (Rastgele Ülke - 30s de bir IP değişir)
@@ -113,6 +119,12 @@ Older generation security tools would completely shut down your network card whe
 - **Smart Kill-Switch:** Keeps data inside using a "Connection Refused" mechanism when the connection drops.
 - **Cloudflare WARP Integration:** Fast anonymity with dynamic WireGuard tunneling.
 - **Absolute MAC Spoofing:** Masks the physical identity (MAC) by resetting the network manager before internet egress.
+
+## ⚠️System Requirements:
+
+The core security engine of ALP VPN (`alp_core`) has been encrypted to prevent reverse engineering. This encryption process was performed using the Python 3.13 infrastructure.
+
+To run the program smoothly, Python 3.13 must be installed on your system. On older versions (e.g., Python 3.10 or 3.11), you may encounter an `undefined symbol` error.
 
 ## Included options 
 
